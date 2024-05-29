@@ -1,5 +1,7 @@
 package model;
 
+import enums.Prioridade;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,16 +48,21 @@ public class Funcionario {
         return tarefaAtual;
     }
 
-    public void setTarefaAtual(Tarefa tarefaAtual) {
-        this.tarefaAtual = tarefaAtual;
-    }
-
     public List<Tarefa> getTarefasPassadas() {
         return tarefasPassadas;
     }
 
     public boolean isDisponivel() {
         return tarefaAtual == null;
+    }
+
+    public void atribuirTarefa(Tarefa tarefaAtual) {
+        if(!isDisponivel()) {
+            System.err.println("O funcionario " + nome + "nao pode receber a tarefa.");
+            return;
+        }
+
+        this.tarefaAtual = tarefaAtual;
     }
 
     public void concluirTarefa() {
