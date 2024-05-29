@@ -6,6 +6,7 @@ import java.util.List;
 public class Funcionario {
     private String nome;
     private String cpf;
+    private int pontuacao;
     private Tarefa tarefaAtual; // tem um
     private List<Tarefa> tarefasPassadas; // tem varios
 
@@ -13,10 +14,12 @@ public class Funcionario {
         this.nome = nome;
         this.cpf = cpf;
         tarefasPassadas = new ArrayList<>();
+        pontuacao = 0;
     }
 
     public Funcionario() {
         tarefasPassadas = new ArrayList<>();
+        pontuacao = 0;
     }
 
     public String getNome() {
@@ -33,6 +36,10 @@ public class Funcionario {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public int getPontuacao() {
+        return pontuacao;
     }
 
     public Tarefa getTarefaAtual() {
@@ -54,6 +61,14 @@ public class Funcionario {
     public void concluirTarefa() {
         tarefaAtual.setFinalizado(true);
         tarefasPassadas.add(tarefaAtual);
+
+        int pontosGanhos = switch (tarefaAtual.getPrioridade()) {
+            case ALTA -> 3;
+            case MEDIA -> 2;
+            case BAIXA -> 1;
+        };
+
+        pontuacao += pontosGanhos;
         tarefaAtual = null;
     }
 }
