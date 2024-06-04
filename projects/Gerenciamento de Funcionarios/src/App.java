@@ -12,6 +12,7 @@ public class App {
     public static void menu() {
         System.out.println("1 - para criar nova tarefa e encontrar um funcionario");
         System.out.println("2 - para listar funcionarios e suas tarefas");
+        System.out.println("3 - concluir tarefa de um funcionario");
         System.out.println("0 - para sair");
         System.out.print("digite sua opcao: ");
     }
@@ -29,9 +30,11 @@ public class App {
 
             if(option == 0) break;
 
+            // crud = create read update delete
             switch (option) {
                 case 1 -> funcionarioService.criarEAtribuirTarefa();
                 case 2 -> funcionarioService.listarComTarefas();
+                case 3 -> funcionarioService.concluirTarefa();
                 default -> System.err.println("digite uma opcao valida!");
             }
 

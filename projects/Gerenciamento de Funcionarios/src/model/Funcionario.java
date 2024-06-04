@@ -78,4 +78,11 @@ public class Funcionario {
         pontuacao += pontosGanhos;
         tarefaAtual = null;
     }
+
+    @Override
+    public String toString() {
+        String ocupacao = isDisponivel() ? "Livre" : tarefaAtual.getDescricao();
+
+        return nome + " (" + pontuacao + " pts): " + ocupacao;
+    }
 }

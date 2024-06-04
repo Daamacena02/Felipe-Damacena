@@ -8,10 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class FuncionarioService {
+public class FuncionarioService { // DRY = DONT REPEAT YOURSELF
 
+    private final int INDEX_ADAPTER = 1;
+    // "database"
     private List<Funcionario> funcionarios;
 
+    // constructor
     public FuncionarioService() {
         funcionarios = new ArrayList<>(List.of(
                 new Funcionario("Pedro", "111.222.333-44"),
@@ -21,11 +24,12 @@ public class FuncionarioService {
         ));
     }
 
+    // methods
     public void listarComTarefas() {
         System.out.println("\n-------------------------------");
-        for(Funcionario funcionario : funcionarios) {
-            String ocupacao = funcionario.isDisponivel() ? "Livre" : funcionario.getTarefaAtual().getDescricao();
-            System.out.println(funcionario.getNome() + ": " + ocupacao);
+        for(int i = 0; i < funcionarios.size(); i++) {
+            Funcionario funcionario = funcionarios.get(i);
+            System.out.println("#" + (i + INDEX_ADAPTER) + " - " + funcionario);
         }
         System.out.println("-------------------------------\n");
     }
@@ -33,6 +37,28 @@ public class FuncionarioService {
     public void criarEAtribuirTarefa() {
         Tarefa tarefa = criarTarefa();
         atribuirTarefa(tarefa);
+    }
+
+    public void concluirTarefa() {
+        // apresentar funcionarios
+        listarComTarefas();
+
+        // escolher um funcionario
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Qual id do funcionario que concliu a tarefa? ");
+        int id = scanner.nextInt() - INDEX_ADAPTER;
+
+        // validar que tenha alguma tarefa
+        Funcionario escolhido = funcionarios.get(id);
+
+        if(escolhido.isDisponivel()) {
+            System.err.println("Este funcionario nao possui uma tarefa");
+            return;
+        }
+
+        // setar a tarefa como finalizada e inserir pontuação
+        escolhido.concluirTarefa();
     }
 
     private Tarefa criarTarefa() {
